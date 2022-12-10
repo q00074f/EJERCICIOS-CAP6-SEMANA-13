@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ORDENACIÓN_POR_INSERCIÓN;
+package ORDENACIÓN_RÁPIDA;
 
 import java.util.Scanner;
 //Gaspar Paucar Wilber Andrihu
@@ -10,12 +10,12 @@ import java.util.Scanner;
  *
  * @author Usuario
  */
-public class ORDENACIÓN_POR_INSERCIÓN {
+public class ORDENACIÓN_RAPIDA {
     public static void main(String[] args) {
         int a[] = new int[IngresoCantidad()];
-        ingresoDatos(a);
+        ingresoDatos(a);  
         MostrarArrayInicial(a);
-        ordInsercion(a);
+        quicksort(a);
         MostrarArrayFinal(a);
     }
     
@@ -48,21 +48,38 @@ public class ORDENACIÓN_POR_INSERCIÓN {
         }
     }
     
-    public static void ordInsercion (int [] a){
-	int i, j;
-	int aux;
-	for (i = 1; i < a.length; i++){
-            /*	 indice j es para explorar la sublista a[i-1]..a[0] buscando la
-            posicion correcta del elemento destino*/
-            j = i;
-            aux = a[i];	
-            // se localiza el punto de inserción explorando hacia abajo
-            while (j > 0 && aux < a[j-1]){
-	 	// desplazar elementos hacia arriba para hacer espacio
-	 	a[j] = a[j-1];
+    public static void quicksort(int a[]){
+	quicksort(a, 0, a.length-1);
+    }
+    
+    public static void quicksort(int a[], int primero, int ultimo){
+	int i, j, central;
+	double pivote;
+	central = (primero + ultimo)/2;
+	pivote = a[central];
+	i = primero;
+	j = ultimo;
+	do {
+            while (a[i] < pivote) i++;
+            while (a[j] > pivote) j--;
+            if (i <= j){
+	 	intercambiar(a, i, j);
+	 	i++;
 	 	j--;
             }
-            a[j] = aux;
-	 }
+	}while (i <= j);
+	if (primero < j){
+            quicksort(a, primero, j); // mismo proceso con sublista izqda
+        }
+        
+        if (i < ultimo){
+            quicksort(a, i, ultimo); // mismo proceso con sublista drcha
+        }
+    }
+    
+    public static void intercambiar(int []a, int i, int j){
+	int aux = a[i];
+	a[i] = a[j];
+	a[j]= aux ;
     }
 }

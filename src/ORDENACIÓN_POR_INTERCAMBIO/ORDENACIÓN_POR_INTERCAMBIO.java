@@ -2,20 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ORDENACIÓN_POR_INSERCIÓN;
-
+package ORDENACIÓN_POR_INTERCAMBIO;
 import java.util.Scanner;
 //Gaspar Paucar Wilber Andrihu
 /**
  *
  * @author Usuario
  */
-public class ORDENACIÓN_POR_INSERCIÓN {
+public class ORDENACIÓN_POR_INTERCAMBIO {
     public static void main(String[] args) {
         int a[] = new int[IngresoCantidad()];
         ingresoDatos(a);
         MostrarArrayInicial(a);
-        ordInsercion(a);
+        ordIntercambio(a);
         MostrarArrayFinal(a);
     }
     
@@ -48,21 +47,21 @@ public class ORDENACIÓN_POR_INSERCIÓN {
         }
     }
     
-    public static void ordInsercion (int [] a){
+    public static void ordIntercambio (int a[]){
 	int i, j;
-	int aux;
-	for (i = 1; i < a.length; i++){
-            /*	 indice j es para explorar la sublista a[i-1]..a[0] buscando la
-            posicion correcta del elemento destino*/
-            j = i;
-            aux = a[i];	
-            // se localiza el punto de inserción explorando hacia abajo
-            while (j > 0 && aux < a[j-1]){
-	 	// desplazar elementos hacia arriba para hacer espacio
-	 	a[j] = a[j-1];
-	 	j--;
+	for (i = 0 ; i < a.length-1; i++){
+            // sitúa mínimo de a[i+1]...a[n-1] en a[i]
+            for (j = i+1 ; j < a.length; j++){
+	 	if (a[i] > a[j]){
+                    intercambiar(a, i, j);
+	 	}
             }
-            a[j] = aux;
-	 }
+        }
+    }
+    
+    public static void intercambiar(int []a, int i, int j){
+	int aux = a[i];
+	a[i] = a[j];
+	a[j]= aux ;
     }
 }
